@@ -7,9 +7,6 @@
 {% endblock title %}
 
 {% block content %}
-<p>
-    {% trans 'If there is missing data that you know how to source, or that you&apos;d like to see here, please' %} <a href="{% url 'contact' %}" title="{% trans 'contact us' %}">{% trans 'contact us' %}</a>
-</p>
 
 {% for entity in object_list %}
 <div class="entity-preview">

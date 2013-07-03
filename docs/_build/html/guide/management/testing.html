@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Testing &mdash; Open Budget 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Open Budget 1.0 documentation" href="../../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="../../index.html">Open Budget 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="testing">
+<h1>Testing<a class="headerlink" href="#testing" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Open Budget has a suite of tests, with the goal of moving to 100% coverage of project code.</p>
+<p>We view tests as an integral part of contributing code to the project: any code contributions must be accompanied by tests.</p>
+<p>A great way to get into the codebase is to run the tests, read the tests, and extend them, refactor them, or raise issues on the issue tracker for potential problems.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>There are no specific configurations for testing. Please see Depenedncies below for more information.</p>
+</div>
+<div class="section" id="running-tests">
+<h2>Running Tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
+<p>To run all the tests of the project:</p>
+<div class="highlight-python"><pre>python manage.py selftest</pre>
+</div>
+<p>Also, when you use devstrap to bootstrap a local environment, you can use the -t flag to run tests:</p>
+<div class="highlight-python"><pre>python manage.py devstrap -m -t</pre>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>Open Budget tests depend on the following 3rd party packages:</p>
+<ul class="simple">
+<li>django</li>
+<li>factory boy</li>
+</ul>
+<div class="section" id="django">
+<h3>Django<a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/django/django">https://github.com/django/django</a></p>
+<p>Django comes with its own test framework. There is extensive documentation for this on the Django site. Please get very familiar with the docs if you will be contributing code to Open Budget:</p>
+<p><a class="reference external" href="https://docs.djangoproject.com/en/1.5/topics/testing/">https://docs.djangoproject.com/en/1.5/topics/testing/</a></p>
+<p>How to import:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+</pre></div>
+</div>
+<p>Example implementation:</p>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/international/tests.py">https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/international/tests.py</a></p>
+</div>
+<div class="section" id="factory-boy">
+<h3>Factory Boy<a class="headerlink" href="#factory-boy" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/dnerdy/factory_boy">https://github.com/dnerdy/factory_boy</a></p>
+<p>Factory Boy is a Python package for creating test objects. It has great support for Django, but can be used in any Python codebase.</p>
+<p>We use Factory Boy to create mock objects for models. Our tests use these mock objects, and not fixtures.</p>
+<p>All definitions for mock objects are found in &#8220;factories.py&#8221; modules, per app.</p>
+<p>Please refer to the Factory Boy documentation if you will be contrinuting code to Open Budget:</p>
+<p><a class="reference external" href="http://factoryboy.readthedocs.org/en/latest/">http://factoryboy.readthedocs.org/en/latest/</a></p>
+<p>How to import:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">factory</span>
+</pre></div>
+</div>
+<p>Example implementation:</p>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/budgets/factories.py">https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/budgets/factories.py</a></p>
+</div>
+</div>
+<div class="section" id="project-code">
+<h2>Project Code<a class="headerlink" href="#project-code" title="Permalink to this headline">¶</a></h2>
+<p>Following Django and Factory Boy conventions, tests are in &#8216;tests.py&#8217; modules in each app that has tests, and factories are in &#8216;factories.py&#8217; modules for the same.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Testing</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#running-tests">Running Tests</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#django">Django</a></li>
+<li><a class="reference internal" href="#factory-boy">Factory Boy</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#project-code">Project Code</a></li>
+</ul>
+</li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/guide/management/testing.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="../../index.html">Open Budget 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Yehonatan Daniv and Paul Walsh for the Open Knowledge Workshop.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

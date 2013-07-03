@@ -1,8 +1,8 @@
 from rest_framework import generics
-from openbudget.apps.international.utilities import translated_fields
-from openbudget.apps.entities import serializers
-from openbudget.apps.entities import filters
-from openbudget.apps.entities import models
+from entities.utils import translated_fields
+from entities import serializers
+from entities import filters
+from entities import models
 
 
 class DomainList(generics.ListAPIView):

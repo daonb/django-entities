@@ -1,0 +1,709 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>API &mdash; Open Budget 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Open Budget 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Guide" href="../index.html" />
+    <link rel="next" title="Sandbox" href="../../demo/index.html" />
+    <link rel="prev" title="Entities" href="../features/entities.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../demo/index.html" title="Sandbox"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../features/entities.html" title="Entities"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Open Budget 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>django-entities has a web API to expose all public data stored in an instance.</p>
+<p>The API allows developers to build apps and visualizations.</p>
+<p>Data from the API is returned in JSON format.</p>
+<p>Additionally, the API is web-browsable - simply go to any API end point in your browser and navigate the API via an HTML interface.</p>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>The Open Budget API is built on top of Django REST Framework (DRF), with Django OAuth Toolkit providing access via oauth2 tokens.</p>
+<p>All instance-wide configuration is done via the project settings, through the settings that REST Framework and OAuth Toolkit expose:</p>
+<p>The default settings look something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># REST FRAMEWORK CONF</span>
+<span class="n">REST_FRAMEWORK</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;DEFAULT_AUTHENTICATION_CLASSES&#39;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s">&#39;rest_framework.authentication.OAuth2Authentication&#39;</span><span class="p">,</span>
+        <span class="s">&#39;rest_framework.authentication.SessionAuthentication&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s">&#39;DEFAULT_PERMISSION_CLASSES&#39;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s">&#39;rest_framework.permissions.AllowAny&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s">&#39;DEFAULT_FILTER_BACKENDS&#39;</span><span class="p">:</span> <span class="p">(</span>
+        <span class="s">&#39;rest_framework.filters.DjangoFilterBackend&#39;</span><span class="p">,</span>
+        <span class="s">&#39;rest_framework.filters.SearchFilter&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s">&#39;PAGINATE_BY&#39;</span><span class="p">:</span> <span class="mi">250</span><span class="p">,</span>
+    <span class="s">&#39;PAGINATE_BY_PARAM&#39;</span><span class="p">:</span> <span class="s">&#39;page_by&#39;</span>
+<span class="p">}</span>
+
+<span class="c"># OAUTH TOOLKIT CONF</span>
+<span class="n">CORS_ORIGIN_ALLOW_ALL</span> <span class="o">=</span> <span class="bp">True</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>The Open Budget web API depends on the following 3rd party packages:</p>
+<ul class="simple">
+<li>Django REST Framework</li>
+<li>Django OAuth Toolkit</li>
+</ul>
+<div class="section" id="django-rest-framework">
+<h3>Django REST Framework<a class="headerlink" href="#django-rest-framework" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/tomchristie/django-rest-framework">https://github.com/tomchristie/django-rest-framework</a></p>
+<p>Django REST Framework has extensive documentation, and also a very active and helpful mailing list for the project. If you want to help develop the Open Budget API, start there for a good understanding of DRF first.</p>
+<p><a class="reference external" href="http://django-rest-framework.org/">http://django-rest-framework.org/</a></p>
+<p><a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework">https://groups.google.com/forum/?fromgroups#!forum/django-rest-framework</a></p>
+<p>How to import:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">rest_framework</span> <span class="kn">import</span> <span class="n">serializers</span>
+</pre></div>
+</div>
+<p>Example implementation:</p>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/budgets/serializers.py">https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/budgets/serializers.py</a></p>
+</div>
+<div class="section" id="django-oauth-toolkit">
+<h3>Django OAuth Toolkit<a class="headerlink" href="#django-oauth-toolkit" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/evonove/django-oauth-toolkit">https://github.com/evonove/django-oauth-toolkit</a></p>
+<p>Django OAuth Toolkit is an actively developed package for integrating oauth2 into Django apps.</p>
+<p><a class="reference external" href="https://django-oauth-toolkit.readthedocs.org/en/latest/index.html">https://django-oauth-toolkit.readthedocs.org/en/latest/index.html</a></p>
+<p><a class="reference external" href="https://groups.google.com/forum/?fromgroups#!forum/django-oauth-toolkit">https://groups.google.com/forum/?fromgroups#!forum/django-oauth-toolkit</a></p>
+</div>
+</div>
+<div class="section" id="api-endpoints">
+<h2>API Endpoints<a class="headerlink" href="#api-endpoints" title="Permalink to this headline">¶</a></h2>
+<p>All endpoints are relative to the API subdomain of the instance domain.</p>
+<p>For example, if an Open Budget instance is installed on openmuni.org.il:</p>
+<ul class="simple">
+<li>API root: <a class="reference external" href="https://api.openmuni.org.il/">https://api.openmuni.org.il/</a></li>
+<li>API version: <a class="reference external" href="https://api.openmuni.org.il/v1/">https://api.openmuni.org.il/v1/</a></li>
+<li>API endpoint: <a class="reference external" href="https://api.openmuni.org.il/v1/budgets/">https://api.openmuni.org.il/v1/budgets/</a></li>
+</ul>
+</div>
+<div class="section" id="writing-an-api-client">
+<h2>Writing an API Client<a class="headerlink" href="#writing-an-api-client" title="Permalink to this headline">¶</a></h2>
+<p>When writing an API client, is is best to use as little hard coded endpoints to the Open Budget API as possible. This will make it easier for you to update your client to support changes and new versions of the API.</p>
+<p>Considering this, we suggest a design along these lines:</p>
+<p>Don&#8217;t hardcode endpoints.</p>
+<p>Hardcoding endpoints makes your client brittle in the face of API changes.
+Instead, hardcode two variables along these lines:</p>
+<p>API_INDEX = &#8220;<a class="reference external" href="https://api.domain.com/">https://api.domain.com/</a>&#8220;</p>
+<p>API_VERSION = &#8220;v1&#8221;</p>
+<p>This provides your client will all the information it needs to get the correct endpoints on intialization, by follow a flow as follows:</p>
+<ol class="arabic simple">
+<li>On initialization, hit the API_INDEX, and get the URL for v1 from the returned JSON object.</li>
+</ol>
+<p>The returned object will look something like this:</p>
+<p>{&#8220;v1&#8221;: &#8220;<a class="reference external" href="https://api.domain.com/v1/">https://api.domain.com/v1/</a>&#8220;}</p>
+<ol class="arabic simple" start="2">
+<li>Hit the version endpoint, which itself returns all its available endpoints.</li>
+</ol>
+<p>The returned object will look something like this:</p>
+<p>{&#8220;entities&#8221;:&#8221;<a class="reference external" href="http://api.domain.com/v1/entities/">http://api.domain.com/v1/entities/</a>&#8220;}</p>
+<ol class="arabic simple" start="3">
+<li>Store the endpoints in an API_ROUTES variable, and use that for API calls.</li>
+</ol>
+<p>Something like this:</p>
+<p>API_ROUTES = {&#8220;entities&#8221;:&#8221;<a class="reference external" href="http://api.domain.com/v1/entities/">http://api.domain.com/v1/entities/</a>&#8220;}</p>
+<p>API_ROUTES.entities # all entities</p>
+</div>
+<div class="section" id="using-the-api">
+<h2>Using the API<a class="headerlink" href="#using-the-api" title="Permalink to this headline">¶</a></h2>
+<p>The web API sticks to a RESTful architecture, and returns all data in JSON format. The API is served over HTTPS only - make sure your client code is compatible with this.</p>
+<div class="section" id="defaults">
+<h3>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="pagination">
+<h4>Pagination<a class="headerlink" href="#pagination" title="Permalink to this headline">¶</a></h4>
+<p>By default, each list view returns up to 250 resources per page. This can be overridden with the <strong>page_by</strong> parameter (see below).</p>
+</div>
+</div>
+<div class="section" id="filtering-searching-ordering-and-paging">
+<h3>Filtering, Searching, Ordering, and Paging<a class="headerlink" href="#filtering-searching-ordering-and-paging" title="Permalink to this headline">¶</a></h3>
+<p>All API endpoints that return <strong>lists</strong> of resources can be <strong>filtered</strong>, <strong>ordered</strong>, and <strong>paginated</strong>.</p>
+<p>Under each resource description below, you&#8217;ll find the available parameters, per resource.</p>
+<p>Essentially, the common syntax is:</p>
+<ul class="simple">
+<li><strong>?[FILTERABLE_FIELD]</strong>: any field that is exposed to filter the query against, where the value is the relevant value type for that field [e.g.: ?entity=264]</li>
+<li><strong>?search</strong>: value is a string to search against the available search fields for the model [e.g.: ?search=health]</li>
+<li><strong>?ordering</strong>: value is a single or comma separated list of ordering fields for the model [e.g.: ?ordering=email]</li>
+<li><strong>?page_by</strong>: where the value is an integer for the amount of resources to return per page [e.g.: ?page_by=500]</li>
+</ul>
+</div>
+<div class="section" id="resources">
+<h3>Resources<a class="headerlink" href="#resources" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="sheets">
+<h4>Sheets<a class="headerlink" href="#sheets" title="Permalink to this headline">¶</a></h4>
+<p>The sheets endpoints provide access to all budget/actual sheet data. There are endpoints to navigate via sheet objects, and to navigate via sheet item objects. The appropriate strategy will depend on what you are trying to achieve.</p>
+<p><strong>Methods</strong></p>
+<p>All sheets endpoints are read-only, via GET.</p>
+<p><strong>Endpoints</strong></p>
+<ul class="simple">
+<li>/sheets/</li>
+<li>/sheets/[id]/</li>
+<li>/sheets/items/</li>
+<li>/sheets/items/[id]/</li>
+</ul>
+<p><strong>Filter</strong></p>
+<p>Use the following query parameters to customize the sheet list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;entity&#8217;</strong> - return all budgets that belong to the given entity.</li>
+<li><strong>&#8216;template&#8217;</strong> - return all budgets that use a given template.</li>
+</ul>
+<p><strong>Search</strong></p>
+<p>Use the search query parameter on the sheet list endpoint to search for free text search over sheets. Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Period</strong> - the period_start and period_end fields of all budgets</li>
+<li><strong>Description</strong> - the description fields of all budgets, including translations</li>
+<li><strong>Entity name</strong> - the name of the entity of this budget, including translations</li>
+</ul>
+<p><strong>Pagination</strong></p>
+<ul class="simple">
+<li>Default: 250</li>
+<li>Custom: Pass an integer to the <strong>page_by</strong> parameter</li>
+</ul>
+</div>
+<div class="section" id="ordering">
+<h4>Ordering<a class="headerlink" href="#ordering" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>period_start</strong></li>
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+</div>
+<div class="section" id="templates">
+<h3>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="description">
+<h4>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h4>
+<p>The templates endpoints provide access to all template data.</p>
+</div>
+<div class="section" id="endpoints">
+<h4>Endpoints<a class="headerlink" href="#endpoints" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/templates/</li>
+<li>/templates/[id]/</li>
+<li>/templates/nodes/</li>
+<li>/templates/nodes/[id]/</li>
+</ul>
+</div>
+<div class="section" id="allowed-methods">
+<h4>Allowed Methods<a class="headerlink" href="#allowed-methods" title="Permalink to this headline">¶</a></h4>
+<p>All actuals endpoints are read only via GET.</p>
+</div>
+<div class="section" id="id1">
+<h4>Pagination<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="filters">
+<h4>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h4>
+<p>Use the following query parameters to customize the template list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;divisions&#8217;</strong> - return all budgets that belong to the given entity.</li>
+<li><strong>&#8216;budgets&#8217;</strong> - return the template used by a given budget.</li>
+<li><strong>&#8216;actuals&#8217;</strong> - return the template used by a given actual.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h4>Ordering<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>period_start</strong></li>
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+<div class="section" id="search">
+<h4>Search<a class="headerlink" href="#search" title="Permalink to this headline">¶</a></h4>
+<p>Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Name</strong> - the name fields of all templates, including translations</li>
+<li><strong>Description</strong> - the description fields of all templates, including translations</li>
+</ul>
+</div>
+</div>
+<div class="section" id="entities">
+<h3>Entities<a class="headerlink" href="#entities" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h4>Description<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>The entities endpoints provide access to all entity data.</p>
+</div>
+<div class="section" id="id4">
+<h4>Endpoints<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/entities/</li>
+<li>/entities/[id]/</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h4>Allowed Methods<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>All entities endpoints are read only via GET.</p>
+</div>
+<div class="section" id="id6">
+<h4>Pagination<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h4>Filters<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>Use the following query parameters to customize the entity list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;division__budgeting&#8217;</strong> - return all entities that are potentially budgeting.</li>
+<li><strong>&#8216;parent&#8217;</strong> - return all children entities of the given parent.</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h4>Ordering<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>name</strong></li>
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h4>Search<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Name</strong> - the name fields of all templates, including translations</li>
+<li><strong>Description</strong> - the description fields of all templates, including translations</li>
+</ul>
+</div>
+</div>
+<div class="section" id="divisions">
+<h3>Divisions<a class="headerlink" href="#divisions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h4>Description<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p>The divisions endpoints provide access to all division data.</p>
+</div>
+<div class="section" id="id11">
+<h4>Endpoints<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/divisions/</li>
+<li>/divisions/[id]/</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h4>Allowed Methods<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<p>All entities endpoints are read only via GET.</p>
+</div>
+<div class="section" id="id13">
+<h4>Pagination<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="id14">
+<h4>Filters<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>Use the following query parameters to customize the division list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;budgeting&#8217;</strong> - return all divisions that are budgeting divisions.</li>
+<li><strong>&#8216;index&#8217;</strong> - return all divisions of the given index.</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h4>Ordering<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>name</strong></li>
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+<div class="section" id="id16">
+<h4>Search<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Name</strong> - the name fields of all divisions, including translations</li>
+</ul>
+</div>
+</div>
+<div class="section" id="domains">
+<h3>Domains<a class="headerlink" href="#domains" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h4>Description<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<p>The domains endpoints provide access to all domain data.</p>
+</div>
+<div class="section" id="id18">
+<h4>Endpoints<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/domains/</li>
+<li>/domains/[id]/</li>
+</ul>
+</div>
+<div class="section" id="id19">
+<h4>Allowed Methods<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<p>All domains endpoints are read only via GET.</p>
+</div>
+<div class="section" id="id20">
+<h4>Pagination<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="id21">
+<h4>Filters<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<p>Not applicable at present.</p>
+</div>
+<div class="section" id="id22">
+<h4>Ordering<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>name</strong></li>
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+<div class="section" id="id23">
+<h4>Search<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<p>Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Name</strong> - the name fields of all divisions, including translations</li>
+</ul>
+</div>
+</div>
+<div class="section" id="contexts">
+<h3>Contexts<a class="headerlink" href="#contexts" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id24">
+<h4>Description<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<p>The contexts endpoints provide access to all context data.</p>
+</div>
+<div class="section" id="id25">
+<h4>Endpoints<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/contexts/</li>
+<li>/contexts/[id]/</li>
+</ul>
+</div>
+<div class="section" id="id26">
+<h4>Allowed Methods<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h4>
+<p>All contexts endpoints are read only via GET.</p>
+</div>
+<div class="section" id="id27">
+<h4>Pagination<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="id28">
+<h4>Filters<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h4>
+<p>Use the following query parameters to customize the contexts list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;entity&#8217;</strong> - return all contexts of a given entity.</li>
+</ul>
+</div>
+<div class="section" id="id29">
+<h4>Ordering<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+<div class="section" id="id30">
+<h4>Search<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h4>
+<p>Not applicable at present.</p>
+</div>
+</div>
+<div class="section" id="comments">
+<h3>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id31">
+<h4>Description<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<p>The comments endpoints provide access to all comments data.</p>
+</div>
+<div class="section" id="id32">
+<h4>Endpoints<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/comments/</li>
+<li>/comments/[id]/</li>
+</ul>
+</div>
+<div class="section" id="id33">
+<h4>Allowed Methods<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
+<p>Comments can be created by posting to the list endpoint.</p>
+<p>All other comments endpoints are read only via GET.</p>
+</div>
+<div class="section" id="id34">
+<h4>Pagination<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="id35">
+<h4>Filters<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
+<p>Use the following query parameters to customize the comments list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;model&#8217;</strong> - return all comments on a given model. Current possible values are budget_item and actual_item</li>
+</ul>
+</div>
+<div class="section" id="id36">
+<h4>Ordering<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<p>Use the following values to the &#8216;ordering&#8217; parameter, to sort results by the matching field. prepend the value with - for reverse ordering.</p>
+<ul class="simple">
+<li><strong>model</strong></li>
+<li><strong>created_on</strong></li>
+<li><strong>last_modified</strong></li>
+</ul>
+</div>
+<div class="section" id="id37">
+<h4>Search<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h4>
+<p>Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Comment</strong> - the comment fields of all comments.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="projects">
+<h3>Projects<a class="headerlink" href="#projects" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id38">
+<h4>Description<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h4>
+<p>The projects endpoints provide access to all project data.</p>
+</div>
+<div class="section" id="id39">
+<h4>Endpoints<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>/projects/</li>
+<li>/projects/[id]/</li>
+</ul>
+</div>
+<div class="section" id="id40">
+<h4>Allowed Methods<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
+<p>Projects can be created by posting to the list endpoint.</p>
+<p>Only authenticated users can create a project.</p>
+<p>Projects can be viewed, updated and deleted from the project detail endpoint.</p>
+<p>Only authenticated project owners have permission to update or delete an existing project.</p>
+</div>
+<div class="section" id="id41">
+<h4>Pagination<a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><strong>Default:</strong> 250</li>
+<li><strong>Custom:</strong> use the &#8216;page_by&#8217; parameter, passing an integer</li>
+</ul>
+</div>
+<div class="section" id="id42">
+<h4>Filters<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
+<p>Use the following query parameters to customize the comments list endpoint.</p>
+<ul class="simple">
+<li><strong>&#8216;author&#8217;</strong> - return all projects by a given author.</li>
+</ul>
+</div>
+<div class="section" id="id43">
+<h4>Search<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<p>Search works over the following fields:</p>
+<ul class="simple">
+<li><strong>Name</strong> - the name fields of all templates, including translations</li>
+<li><strong>Description</strong> - the description fields of all templates, including translations</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">API</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li><a class="reference internal" href="#django-rest-framework">Django REST Framework</a></li>
+<li><a class="reference internal" href="#django-oauth-toolkit">Django OAuth Toolkit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#api-endpoints">API Endpoints</a></li>
+<li><a class="reference internal" href="#writing-an-api-client">Writing an API Client</a></li>
+<li><a class="reference internal" href="#using-the-api">Using the API</a><ul>
+<li><a class="reference internal" href="#defaults">Defaults</a><ul>
+<li><a class="reference internal" href="#pagination">Pagination</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#filtering-searching-ordering-and-paging">Filtering, Searching, Ordering, and Paging</a></li>
+<li><a class="reference internal" href="#resources">Resources</a><ul>
+<li><a class="reference internal" href="#sheets">Sheets</a></li>
+<li><a class="reference internal" href="#ordering">Ordering</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#templates">Templates</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#endpoints">Endpoints</a></li>
+<li><a class="reference internal" href="#allowed-methods">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id1">Pagination</a></li>
+<li><a class="reference internal" href="#filters">Filters</a></li>
+<li><a class="reference internal" href="#id2">Ordering</a></li>
+<li><a class="reference internal" href="#search">Search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#entities">Entities</a><ul>
+<li><a class="reference internal" href="#id3">Description</a></li>
+<li><a class="reference internal" href="#id4">Endpoints</a></li>
+<li><a class="reference internal" href="#id5">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id6">Pagination</a></li>
+<li><a class="reference internal" href="#id7">Filters</a></li>
+<li><a class="reference internal" href="#id8">Ordering</a></li>
+<li><a class="reference internal" href="#id9">Search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#divisions">Divisions</a><ul>
+<li><a class="reference internal" href="#id10">Description</a></li>
+<li><a class="reference internal" href="#id11">Endpoints</a></li>
+<li><a class="reference internal" href="#id12">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id13">Pagination</a></li>
+<li><a class="reference internal" href="#id14">Filters</a></li>
+<li><a class="reference internal" href="#id15">Ordering</a></li>
+<li><a class="reference internal" href="#id16">Search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#domains">Domains</a><ul>
+<li><a class="reference internal" href="#id17">Description</a></li>
+<li><a class="reference internal" href="#id18">Endpoints</a></li>
+<li><a class="reference internal" href="#id19">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id20">Pagination</a></li>
+<li><a class="reference internal" href="#id21">Filters</a></li>
+<li><a class="reference internal" href="#id22">Ordering</a></li>
+<li><a class="reference internal" href="#id23">Search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contexts">Contexts</a><ul>
+<li><a class="reference internal" href="#id24">Description</a></li>
+<li><a class="reference internal" href="#id25">Endpoints</a></li>
+<li><a class="reference internal" href="#id26">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id27">Pagination</a></li>
+<li><a class="reference internal" href="#id28">Filters</a></li>
+<li><a class="reference internal" href="#id29">Ordering</a></li>
+<li><a class="reference internal" href="#id30">Search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#comments">Comments</a><ul>
+<li><a class="reference internal" href="#id31">Description</a></li>
+<li><a class="reference internal" href="#id32">Endpoints</a></li>
+<li><a class="reference internal" href="#id33">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id34">Pagination</a></li>
+<li><a class="reference internal" href="#id35">Filters</a></li>
+<li><a class="reference internal" href="#id36">Ordering</a></li>
+<li><a class="reference internal" href="#id37">Search</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#projects">Projects</a><ul>
+<li><a class="reference internal" href="#id38">Description</a></li>
+<li><a class="reference internal" href="#id39">Endpoints</a></li>
+<li><a class="reference internal" href="#id40">Allowed Methods</a></li>
+<li><a class="reference internal" href="#id41">Pagination</a></li>
+<li><a class="reference internal" href="#id42">Filters</a></li>
+<li><a class="reference internal" href="#id43">Search</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../features/entities.html"
+                        title="previous chapter">Entities</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../demo/index.html"
+                        title="next chapter">Sandbox</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/guide/interfaces/api.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../demo/index.html" title="Sandbox"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../features/entities.html" title="Entities"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Open Budget 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Yehonatan Daniv and Paul Walsh for the Open Knowledge Workshop.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -1,9 +1,47 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from uuidfield import UUIDField
 from autoslug import AutoSlugField
-from openbudget.commons.mixins.models import TimeStampedModel, UUIDModel, \
-    ClassMethodMixin
-from openbudget.commons.utilities import get_ultimate_parent
+
+class ClassMethodMixin(object):
+    """A mixin for commonly used classmethods on models."""
+
+    @classmethod
+    def get_class_name(cls):
+        value = cls.__name__.lower()
+        return value
+
+
+class TimeStampedModel(models.Model):
+    """A mixin to add timestamps to models that inherit it."""
+
+    created_on = models.DateTimeField(
+        _('Created on'),
+        db_index=True,
+        auto_now_add=True,
+        editable=False
+    )
+    last_modified = models.DateTimeField(
+        _('Last modified'),
+        db_index=True,
+        auto_now=True,
+        editable=False
+    )
+
+    class Meta:
+        abstract = True
+
+
+class UUIDModel(models.Model):
+    """A mixin to add UUIDs to models that inherit it."""
+
+    uuid = UUIDField(
+        db_index=True,
+        auto=True
+    )
+
+    class Meta:
+        abstract = True
 
 
 class DomainManager(models.Manager):
@@ -188,8 +226,11 @@ class Entity(TimeStampedModel, ClassMethodMixin):
     @property
     def ultimate_parent(self):
         """Returns the ultimate parent of this object. If none, returns self."""
-
-        return get_ultimate_parent(self.parent)
+        parent = self.parent
+        if parent:
+            return parent.ultimate_parent
+        else:
+            return self
 
     @property
     def siblings(self):

@@ -1,5 +1,5 @@
 from django_filters import FilterSet
-from openbudget.apps.entities.models import Entity, Domain, Division
+from entities.models import Entity, Domain, Division
 
 
 class DomainFilter(FilterSet):

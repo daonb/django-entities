@@ -1,7 +1,7 @@
 import datetime
 import factory
 from django.utils.timezone import utc
-from openbudget.apps.entities.models import Domain, Division, Entity
+from entities.models import Domain, Division, Entity
 
 
 class DomainFactory(factory.DjangoModelFactory):

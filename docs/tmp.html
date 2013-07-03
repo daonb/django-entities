@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.10: http://docutils.sourceforge.net/" />
+<title>Requirements</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7514 2012-09-14 14:27:12Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="requirements">
+<h1 class="title">Requirements</h1>
+
+<div class="section" id="overview">
+<h1>Overview</h1>
+<p>Open Budget is written in Python and JavaScript.</p>
+<p>If you develop web apps in these languages, it is likely that your machine is ready to start work.</p>
+<p>Below we walk you through setting up an environment. First, the system requirements to work on the project, and second, the setup of the project itself.</p>
+</div>
+<div class="section" id="system-requirements">
+<h1>System requirements</h1>
+<p>You system will need to have <strong>Python</strong> (and some system-wide Python packages), <strong>Node.js</strong> (and some system-wide Node.js modules), <strong>Git</strong>, and <strong>Mercurial</strong> (for working with code repositories).</p>
+<ul class="simple">
+<li>A unix-like OS</li>
+<li><a class="reference external" href="http://python.org/">Python</a> (2.7.x)</li>
+<li><a class="reference external" href="http://nodejs.org/">Node</a> (0.8.x)</li>
+<li><a class="reference external" href="http://git-scm.com/">Git</a></li>
+<li><a class="reference external" href="http://mercurial.selenic.com/">Mercurial</a></li>
+<li><a class="reference external" href="http://virtualenvwrapper.readthedocs.org/en/latest/">virtualenv</a> (a Python package for working with multiple dev. environments)</li>
+<li><a class="reference external" href="http://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a> (some sugar for virtualenv)</li>
+<li>The necessary tools to build Python packages (eg: python-dev on Debian systems)</li>
+<li><a class="reference external" href="http://volojs.org/">volojs</a> (a package manager for client-side resources)</li>
+</ul>
+<p>We develop on Ubuntu and Mac OS X. If you use other operating systems with any success, please make a pull request on this file, with any required additions, to support those operating systems.</p>
+<p>All setup instructions are tested on Ubuntu and Mac OS X only.</p>
+<p><strong>IMPORTANT: Please make sure you meet these requirements before moving on to the installation of the project.</strong></p>
+<p>Additionally, if you are new to web development with Python, we also recommend Kenneth Reitz's excellent best practices guide, which we attempt to follow:</p>
+<p><a class="reference external" href="http://docs.python-guide.org/en/latest/">http://docs.python-guide.org/en/latest/</a></p>
+</div>
+<div class="section" id="installing-system-requirements">
+<h1>Installing system requirements</h1>
+<div class="section" id="ubuntu">
+<h2>Ubuntu</h2>
+<p>Here we go:</p>
+<pre class="literal-block">
+sudo apt-get install python-dev mercurial git-core nodejs python-pip
+sudo pip install virtualenv virtualenvwrapper
+npm install volo -g
+</pre>
+<p>Now we'll setup virutalenvwrapper, in our user's .profile file:</p>
+<pre class="literal-block">
+# this goes in ~/.profile
+export WORKON_HOME=&quot;/srv/environments&quot;
+export PROJECT_HOME=&quot;/srv/projects&quot;
+source /usr/local/bin/virtualenvwrapper.sh
+export PIP_VIRTUAL_ENV_BASE=$WORKON_HOME
+</pre>
+</div>
+<div class="section" id="fedora">
+<h2>Fedora</h2>
+<p>Here we go:</p>
+<pre class="literal-block">
+sudo yum install python-devel mercurial
+</pre>
+</div>
+<div class="section" id="mac-os-x">
+<h2>Mac OS X</h2>
+<p>First, make sure you have XCode installed, <strong>and</strong> Command Line Tools. See here for more info about this:</p>
+<p><a class="reference external" href="https://python-guide.readthedocs.org/en/latest/starting/install/osx.html">https://python-guide.readthedocs.org/en/latest/starting/install/osx.html</a></p>
+<p>Secondly, install Homebrew, which is a great package manager for all the *nix goodies you need to develop:</p>
+<p><a class="reference external" href="http://mxcl.github.io/homebrew/">http://mxcl.github.io/homebrew/</a></p>
+<p>To ensure you are ready, try:</p>
+<pre class="literal-block">
+brew
+</pre>
+<p>You should see a list of arguments the brew command accepts.</p>
+<p>Next, you can choose to use the version of Python that comes with OS X, or you can use a Homebrew managed Python. If you are not sure, just stick with system Python for now:</p>
+<pre class="literal-block">
+# using system Python
+brew install mercurial git node
+sudo easy_install virtualenv
+sudo pip install virtualenvwrapper
+npm install volo -g
+
+# alternatively, using homebrew Python
+brew install mercurial git node python
+pip install virtualenv virtualenvwrapper
+npm install volo -g
+</pre>
+<p>Now we'll setup virutalenvwrapper, in our user's .bash_profile file:</p>
+<pre class="literal-block">
+# this goes in ~/.bash_profile
+export WORKON_HOME=&quot;/Users/[YOUR_USER]/Sites/environments&quot;
+export PROJECT_HOME=&quot;/Users/[YOUR_USER]/Sites/projects&quot;
+source /usr/local/bin/virtualenvwrapper.sh
+export PIP_VIRTUAL_ENV_BASE=$WORKON_HOME
+</pre>
+</div>
+</div>
+<div class="section" id="installing-the-project">
+<h1>Installing the project</h1>
+<p>As long as you have met the system requirements above, we're ready to install the project.</p>
+<div class="section" id="configure-hosts">
+<h2>Configure hosts</h2>
+<p>This project makes use of subdomains to target languages, and for API requests. To enable this functionality fully, you'll need to edit your hosts file on your development machine.</p>
+<p><strong>Ubuntu</strong>:</p>
+<pre class="literal-block">
+sudo nano /etc/hosts
+</pre>
+<p><strong>Mac OS X</strong>:</p>
+<pre class="literal-block">
+sudo nano /private/etc/hosts
+</pre>
+<p>Add the following domain mappings for localhost:</p>
+<pre class="literal-block">
+127.0.0.1 obudget.dev www.obudget.dev api.obudget.dev en.obudget.dev he.obudget.dev ar.obudget.dev ru.obudget.dev
+</pre>
+</div>
+<div class="section" id="make-a-virtualenv">
+<h2>Make a virtualenv</h2>
+<p><strong>Remember:</strong> See the <a class="reference external" href="http://open-budget.readthedocs.org/en/latest/guide/management/dependencies.html">dependencies page</a> for more information on using virtualenv and virtualenvwrapper.</p>
+<p>Issue the following commands to create a new virtualenv for the project, and then clone the git repository into your virtualenv project directory:</p>
+<pre class="literal-block">
+# create the virtual environment
+mkvirtualenv open-budget
+
+# create a directory for our project code
+mkdir /srv/projects/open-budget
+
+# link our project code directory to our virtual environment
+setvirtualenvproject /srv/environments/open-budget /srv/projects/open-budget
+
+# move to the root of our project code directory
+cdproject
+</pre>
+</div>
+<div class="section" id="clone-the-project-repository">
+<h2>Clone the project repository</h2>
+<p>Now we have an environment setup, and we are at the root of our project directory, we need to clone the project from Github:</p>
+<pre class="literal-block">
+git clone git&#64;github.com:hasadna/omuni-budget.git .
+</pre>
+<p><strong>Important: Note the &quot;.&quot; at the end of the git clone command.</strong></p>
+</div>
+<div class="section" id="install-requirements-and-test">
+<h2>Install requirements and test</h2>
+<p>And continuing, we'll install all the project requirements, the Python requirements via pip, and the Javascript requirements via volo:</p>
+<pre class="literal-block">
+pip install -r requirements/base.txt --use-mirrors
+
+volo add -noprompt
+
+python manage.py test
+</pre>
+</div>
+<div class="section" id="bootstrap-the-project">
+<h2>Bootstrap the project</h2>
+<p>Now we have almost everything we need. We can populate the database with our initial data, run our tests, and run a development server:</p>
+<pre class="literal-block">
+python manage.py devstrap -m -t
+
+python manage.py runserver
+</pre>
+<p>Right now you can see the app at the following address in your browser <a class="reference external" href="http://obudget.dev:8000/">http://obudget.dev:8000/</a></p>
+</div>
+<div class="section" id="the-easy-way-to-working-data">
+<h2>The easy way to working data</h2>
+<p>The project bootstrap loads quite a chunk of the data the app requires - but not everything. Notably, it does not load budget data at this point. The easiest way to add the latest budget data we have is to now, replace your development database with one that is completely populated. We have a set of populated databases here:</p>
+<p><a class="reference external" href="https://drive.google.com/#folders/0B4JzAmQXH28mdUpST3lkSzluWnc">https://drive.google.com/#folders/0B4JzAmQXH28mdUpST3lkSzluWnc</a></p>
+<p>Simply grab the latest one by date, download it, rename it local.db and replace the existing local.db in your repo root.</p>
+</div>
+</div>
+<div class="section" id="contributions">
+<h1>Contributions</h1>
+<p>You can contribute to the project with code, content and ideas. If you have any ideas or suggestions for content, please open a ticket on the issue tracker, or post a topic on the developer discussion group (links on home page of the docs).</p>
+<p>If you want to contribute code, please keep these points in mind:</p>
+<ul class="simple">
+<li><strong>Style</strong>: We try to follow PEP-8 Please lint your code before submitting a pull request</li>
+<li><strong>Tests</strong>: If you write a piece of code, write a test before you submit a pull request, and also make sure your code does not break existing tests</li>
+<li><strong>Docs</strong>: If you write a piece of code, please make sure it has docstrings to explain the functionality</li>
+<li><strong>Branching</strong>: We follow the Git Flow method for managing branches. and all development work is done off the <strong>develop</strong> branch</li>
+</ul>
+<p>More below.</p>
+</div>
+<div class="section" id="style">
+<h1>Style</h1>
+<p>TODO</p>
+</div>
+<div class="section" id="tests">
+<h1>Tests</h1>
+<p>We won't accept code that doesn't have tests for it.</p>
+</div>
+<div class="section" id="docs">
+<h1>Docs</h1>
+<p>We do not expect contributors to write docs (this guide), but it is great if they do.</p>
+<p>However, please try to use doc strings or comments so your code is easy to follow. This, combined with tests, will help us include your code, and write docs for it.</p>
+</div>
+<div class="section" id="branching">
+<h1>Branching</h1>
+<p>We follow <a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a> for branch management.</p>
+<p>What this means:</p>
+<ul class="simple">
+<li>Master branch is for production deployment only - you should not ever be working off it</li>
+<li>Develop branch is for work. Either work directly from it, or, preferably, branch off it into a &quot;feature&quot; branch</li>
+<li>A feature branch is named &quot;feature/[YOUR_FEATURE_NAME]&quot;. Pull requests on themed branches like this are nice.</li>
+</ul>
+<p>Examples:</p>
+<ul class="simple">
+<li>I want to work on a ticket to add &quot;bookmarking&quot; features, then I branch off &quot;develop&quot; into &quot;feature/bookmarks&quot;, and when I am finished, I submit a pull request for this branch</li>
+<li>I want to work on a ticket to refactor view logic in the &quot;entities&quot; app, then I branch off &quot;develop&quot; into &quot;feature/entities-refactoring&quot;, and when I am finished, I submit a pull request for this branch</li>
+</ul>
+<p>Again, see the original post about Git Flow for more good practices:</p>
+<p><a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></p>
+<p>Some GUI version control apps, such as Source Tree for OS X, integrate Git Flow into the app, making it even easier to follow the principles.</p>
+</div>
+</div>
+</body>
+</html>

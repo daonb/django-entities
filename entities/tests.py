@@ -1,7 +1,7 @@
 import random
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from openbudget.apps.entities.factories import EntityFactory
+from entities.factories import EntityFactory
 
 
 class EntityTestCase(TestCase):

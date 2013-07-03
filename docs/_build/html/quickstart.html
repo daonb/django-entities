@@ -1,0 +1,329 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Requirements &mdash; Open Budget 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Open Budget 1.0 documentation" href="index.html" />
+    <link rel="next" title="Guide" href="guide/index.html" />
+    <link rel="prev" title="Open Budget: A platform for accessible and meaningful budgetary data" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="guide/index.html" title="Guide"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Open Budget: A platform for accessible and meaningful budgetary data"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Open Budget 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Open Budget is written in Python and JavaScript.</p>
+<p>If you develop web apps in these languages, it is likely that your machine is ready to start work.</p>
+<p>Below we walk you through setting up an environment. First, the system requirements to work on the project, and second, the setup of the project itself.</p>
+</div>
+<div class="section" id="system-requirements">
+<h2>System requirements<a class="headerlink" href="#system-requirements" title="Permalink to this headline">¶</a></h2>
+<p>You system will need to have <strong>Python</strong> (and some system-wide Python packages), <strong>Node.js</strong> (and some system-wide Node.js modules), <strong>Git</strong>, and <strong>Mercurial</strong> (for working with code repositories).</p>
+<ul class="simple">
+<li>A unix-like OS</li>
+<li><a class="reference external" href="http://python.org/">Python</a> (2.7.x)</li>
+<li><a class="reference external" href="http://nodejs.org/">Node</a> (0.8.x)</li>
+<li><a class="reference external" href="http://git-scm.com/">Git</a></li>
+<li><a class="reference external" href="http://mercurial.selenic.com/">Mercurial</a></li>
+<li><a class="reference external" href="http://virtualenvwrapper.readthedocs.org/en/latest/">virtualenv</a> (a Python package for working with multiple dev. environments)</li>
+<li><a class="reference external" href="http://virtualenvwrapper.readthedocs.org/en/latest/">virtualenvwrapper</a> (some sugar for virtualenv)</li>
+<li>The necessary tools to build Python packages (eg: python-dev on Debian systems)</li>
+<li><a class="reference external" href="http://volojs.org/">volojs</a> (a package manager for client-side resources)</li>
+</ul>
+<p>We develop on Ubuntu and Mac OS X. If you use other operating systems with any success, please make a pull request on this file, with any required additions, to support those operating systems.</p>
+<p>All setup instructions are tested on Ubuntu and Mac OS X only.</p>
+<p><strong>IMPORTANT: Please make sure you meet these requirements before moving on to the installation of the project.</strong></p>
+<p>Additionally, if you are new to web development with Python, we also recommend Kenneth Reitz&#8217;s excellent best practices guide, which we attempt to follow:</p>
+<p><a class="reference external" href="http://docs.python-guide.org/en/latest/">http://docs.python-guide.org/en/latest/</a></p>
+</div>
+<div class="section" id="installing-system-requirements">
+<h2>Installing system requirements<a class="headerlink" href="#installing-system-requirements" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ubuntu">
+<h3>Ubuntu<a class="headerlink" href="#ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>Here we go:</p>
+<div class="highlight-python"><pre>sudo apt-get install python-dev mercurial git-core nodejs python-pip
+sudo pip install virtualenv virtualenvwrapper
+npm install volo -g</pre>
+</div>
+<p>Now we&#8217;ll setup virutalenvwrapper, in our user&#8217;s .profile file:</p>
+<div class="highlight-python"><pre># this goes in ~/.profile
+export WORKON_HOME="/srv/environments"
+export PROJECT_HOME="/srv/projects"
+source /usr/local/bin/virtualenvwrapper.sh
+export PIP_VIRTUAL_ENV_BASE=$WORKON_HOME</pre>
+</div>
+</div>
+<div class="section" id="fedora">
+<h3>Fedora<a class="headerlink" href="#fedora" title="Permalink to this headline">¶</a></h3>
+<p>Here we go:</p>
+<div class="highlight-python"><pre>sudo yum install python-devel mercurial</pre>
+</div>
+</div>
+<div class="section" id="mac-os-x">
+<h3>Mac OS X<a class="headerlink" href="#mac-os-x" title="Permalink to this headline">¶</a></h3>
+<p>First, make sure you have XCode installed, <strong>and</strong> Command Line Tools. See here for more info about this:</p>
+<p><a class="reference external" href="https://python-guide.readthedocs.org/en/latest/starting/install/osx.html">https://python-guide.readthedocs.org/en/latest/starting/install/osx.html</a></p>
+<p>Secondly, install Homebrew, which is a great package manager for all the *nix goodies you need to develop:</p>
+<p><a class="reference external" href="http://mxcl.github.io/homebrew/">http://mxcl.github.io/homebrew/</a></p>
+<p>To ensure you are ready, try:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">brew</span>
+</pre></div>
+</div>
+<p>You should see a list of arguments the brew command accepts.</p>
+<p>Next, you can choose to use the version of Python that comes with OS X, or you can use a Homebrew managed Python. If you are not sure, just stick with system Python for now:</p>
+<div class="highlight-python"><pre># using system Python
+brew install mercurial git node
+sudo easy_install virtualenv
+sudo pip install virtualenvwrapper
+npm install volo -g
+
+# alternatively, using homebrew Python
+brew install mercurial git node python
+pip install virtualenv virtualenvwrapper
+npm install volo -g</pre>
+</div>
+<p>Now we&#8217;ll setup virutalenvwrapper, in our user&#8217;s .bash_profile file:</p>
+<div class="highlight-python"><pre># this goes in ~/.bash_profile
+export WORKON_HOME="/Users/[YOUR_USER]/Sites/environments"
+export PROJECT_HOME="/Users/[YOUR_USER]/Sites/projects"
+source /usr/local/bin/virtualenvwrapper.sh
+export PIP_VIRTUAL_ENV_BASE=$WORKON_HOME</pre>
+</div>
+</div>
+</div>
+<div class="section" id="installing-the-project">
+<h2>Installing the project<a class="headerlink" href="#installing-the-project" title="Permalink to this headline">¶</a></h2>
+<p>As long as you have met the system requirements above, we&#8217;re ready to install the project.</p>
+<div class="section" id="configure-hosts">
+<h3>Configure hosts<a class="headerlink" href="#configure-hosts" title="Permalink to this headline">¶</a></h3>
+<p>This project makes use of subdomains to target languages, and for API requests. To enable this functionality fully, you&#8217;ll need to edit your hosts file on your development machine.</p>
+<p><strong>Ubuntu</strong>:</p>
+<div class="highlight-python"><pre>sudo nano /etc/hosts</pre>
+</div>
+<p><strong>Mac OS X</strong>:</p>
+<div class="highlight-python"><pre>sudo nano /private/etc/hosts</pre>
+</div>
+<p>Add the following domain mappings for localhost:</p>
+<div class="highlight-python"><pre>127.0.0.1 obudget.dev www.obudget.dev api.obudget.dev en.obudget.dev he.obudget.dev ar.obudget.dev ru.obudget.dev</pre>
+</div>
+</div>
+<div class="section" id="make-a-virtualenv">
+<h3>Make a virtualenv<a class="headerlink" href="#make-a-virtualenv" title="Permalink to this headline">¶</a></h3>
+<p><strong>Remember:</strong> See the <a class="reference external" href="http://open-budget.readthedocs.org/en/latest/guide/management/dependencies.html">dependencies page</a> for more information on using virtualenv and virtualenvwrapper.</p>
+<p>Issue the following commands to create a new virtualenv for the project, and then clone the git repository into your virtualenv project directory:</p>
+<div class="highlight-python"><pre># create the virtual environment
+mkvirtualenv open-budget
+
+# create a directory for our project code
+mkdir /srv/projects/open-budget
+
+# link our project code directory to our virtual environment
+setvirtualenvproject /srv/environments/open-budget /srv/projects/open-budget
+
+# move to the root of our project code directory
+cdproject</pre>
+</div>
+</div>
+<div class="section" id="clone-the-project-repository">
+<h3>Clone the project repository<a class="headerlink" href="#clone-the-project-repository" title="Permalink to this headline">¶</a></h3>
+<p>Now we have an environment setup, and we are at the root of our project directory, we need to clone the project from Github:</p>
+<div class="highlight-python"><pre>git clone git@github.com:hasadna/omuni-budget.git .</pre>
+</div>
+<p><strong>Important: Note the &#8221;.&#8221; at the end of the git clone command.</strong></p>
+</div>
+<div class="section" id="install-requirements-and-test">
+<h3>Install requirements and test<a class="headerlink" href="#install-requirements-and-test" title="Permalink to this headline">¶</a></h3>
+<p>And continuing, we&#8217;ll install all the project requirements, the Python requirements via pip, and the Javascript requirements via volo:</p>
+<div class="highlight-python"><pre>pip install -r requirements/base.txt --use-mirrors
+
+volo add -noprompt
+
+python manage.py test</pre>
+</div>
+</div>
+<div class="section" id="bootstrap-the-project">
+<h3>Bootstrap the project<a class="headerlink" href="#bootstrap-the-project" title="Permalink to this headline">¶</a></h3>
+<p>Now we have almost everything we need. We can populate the database with our initial data, run our tests, and run a development server:</p>
+<div class="highlight-python"><pre>python manage.py devstrap -m -t
+
+python manage.py runserver</pre>
+</div>
+<p>Right now you can see the app at the following address in your browser <a class="reference external" href="http://obudget.dev:8000/">http://obudget.dev:8000/</a></p>
+</div>
+<div class="section" id="the-easy-way-to-working-data">
+<h3>The easy way to working data<a class="headerlink" href="#the-easy-way-to-working-data" title="Permalink to this headline">¶</a></h3>
+<p>The project bootstrap loads quite a chunk of the data the app requires - but not everything. Notably, it does not load budget data at this point. The easiest way to add the latest budget data we have is to now, replace your development database with one that is completely populated. We have a set of populated databases here:</p>
+<p><a class="reference external" href="https://drive.google.com/#folders/0B4JzAmQXH28mdUpST3lkSzluWnc">https://drive.google.com/#folders/0B4JzAmQXH28mdUpST3lkSzluWnc</a></p>
+<p>Simply grab the latest one by date, download it, rename it local.db and replace the existing local.db in your repo root.</p>
+</div>
+</div>
+<div class="section" id="contributions">
+<h2>Contributions<a class="headerlink" href="#contributions" title="Permalink to this headline">¶</a></h2>
+<p>You can contribute to the project with code, content and ideas. If you have any ideas or suggestions for content, please open a ticket on the issue tracker, or post a topic on the developer discussion group (links on home page of the docs).</p>
+<p>If you want to contribute code, please keep these points in mind:</p>
+<ul class="simple">
+<li><strong>Style</strong>: We try to follow PEP-8 Please lint your code before submitting a pull request</li>
+<li><strong>Tests</strong>: If you write a piece of code, write a test before you submit a pull request, and also make sure your code does not break existing tests</li>
+<li><strong>Docs</strong>: If you write a piece of code, please make sure it has docstrings to explain the functionality</li>
+<li><strong>Branching</strong>: We follow the Git Flow method for managing branches. and all development work is done off the <strong>develop</strong> branch</li>
+</ul>
+<p>More below.</p>
+</div>
+<div class="section" id="style">
+<h2>Style<a class="headerlink" href="#style" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="tests">
+<h2>Tests<a class="headerlink" href="#tests" title="Permalink to this headline">¶</a></h2>
+<p>We won&#8217;t accept code that doesn&#8217;t have tests for it.</p>
+</div>
+<div class="section" id="docs">
+<h2>Docs<a class="headerlink" href="#docs" title="Permalink to this headline">¶</a></h2>
+<p>We do not expect contributors to write docs (this guide), but it is great if they do.</p>
+<p>However, please try to use doc strings or comments so your code is easy to follow. This, combined with tests, will help us include your code, and write docs for it.</p>
+</div>
+<div class="section" id="branching">
+<h2>Branching<a class="headerlink" href="#branching" title="Permalink to this headline">¶</a></h2>
+<p>We follow <a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">GitFlow</a> for branch management.</p>
+<p>What this means:</p>
+<ul class="simple">
+<li>Master branch is for production deployment only - you should not ever be working off it</li>
+<li>Develop branch is for work. Either work directly from it, or, preferably, branch off it into a &#8220;feature&#8221; branch</li>
+<li>A feature branch is named &#8220;feature/[YOUR_FEATURE_NAME]&#8221;. Pull requests on themed branches like this are nice.</li>
+</ul>
+<p>Examples:</p>
+<ul class="simple">
+<li>I want to work on a ticket to add &#8220;bookmarking&#8221; features, then I branch off &#8220;develop&#8221; into &#8220;feature/bookmarks&#8221;, and when I am finished, I submit a pull request for this branch</li>
+<li>I want to work on a ticket to refactor view logic in the &#8220;entities&#8221; app, then I branch off &#8220;develop&#8221; into &#8220;feature/entities-refactoring&#8221;, and when I am finished, I submit a pull request for this branch</li>
+</ul>
+<p>Again, see the original post about Git Flow for more good practices:</p>
+<p><a class="reference external" href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></p>
+<p>Some GUI version control apps, such as Source Tree for OS X, integrate Git Flow into the app, making it even easier to follow the principles.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Requirements</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#system-requirements">System requirements</a></li>
+<li><a class="reference internal" href="#installing-system-requirements">Installing system requirements</a><ul>
+<li><a class="reference internal" href="#ubuntu">Ubuntu</a></li>
+<li><a class="reference internal" href="#fedora">Fedora</a></li>
+<li><a class="reference internal" href="#mac-os-x">Mac OS X</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#installing-the-project">Installing the project</a><ul>
+<li><a class="reference internal" href="#configure-hosts">Configure hosts</a></li>
+<li><a class="reference internal" href="#make-a-virtualenv">Make a virtualenv</a></li>
+<li><a class="reference internal" href="#clone-the-project-repository">Clone the project repository</a></li>
+<li><a class="reference internal" href="#install-requirements-and-test">Install requirements and test</a></li>
+<li><a class="reference internal" href="#bootstrap-the-project">Bootstrap the project</a></li>
+<li><a class="reference internal" href="#the-easy-way-to-working-data">The easy way to working data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#contributions">Contributions</a></li>
+<li><a class="reference internal" href="#style">Style</a></li>
+<li><a class="reference internal" href="#tests">Tests</a></li>
+<li><a class="reference internal" href="#docs">Docs</a></li>
+<li><a class="reference internal" href="#branching">Branching</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Open Budget: A platform for accessible and meaningful budgetary data</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="guide/index.html"
+                        title="next chapter">Guide</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="guide/index.html" title="Guide"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Open Budget: A platform for accessible and meaningful budgetary data"
+             >previous</a> |</li>
+        <li><a href="index.html">Open Budget 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Yehonatan Daniv and Paul Walsh for the Open Knowledge Workshop.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

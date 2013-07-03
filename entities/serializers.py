@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from openbudget.apps.international.utilities import translated_fields
-from openbudget.apps.entities import models
-from openbudget.apps.sheets import serializers as sheet_serializers
+from entities import models
+from entities.utils import translated_fields
 
 
 class EntityBase(serializers.HyperlinkedModelSerializer):
@@ -49,8 +48,20 @@ class DivisionDetail(DivisionBase):
     class Meta(DivisionBase.Meta):
         fields = DivisionBase.Meta.fields + ['entities']
 
+#TODO: change back to HyperlinkedModelSerializer once we fix the url of DenormalizedSheetItem
+class SheetBase(serializers.ModelSerializer):
+    """The default serialized representation of sheets."""
+
+    period = serializers.Field(source='period')
+
+    class Meta:
+        model = models.Sheet
+        #TODO: put 'url' back here once we fix the url of DenormalizedSheetItem
+        fields = ['id', 'template', 'entity', 'description', 'period',
+                  'created_on', 'last_modified'] + translated_fields(model)
+
 
 class EntityDetail(EntityBase):
     """A detailed, related representation of entities."""
 
-    sheets = sheet_serializers.SheetBase()
+    sheets = SheetBase()

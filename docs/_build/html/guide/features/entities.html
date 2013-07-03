@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Entities &mdash; Open Budget 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Open Budget 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Guide" href="../index.html" />
+    <link rel="next" title="API" href="../interfaces/api.html" />
+    <link rel="prev" title="Guide" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../interfaces/api.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Guide"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Open Budget 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Guide</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="entities">
+<h1>Entities<a class="headerlink" href="#entities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Open Budget has a flexible system for supporting budgeting entities, be they corporations, governments, non-profits, and even all of the above in the same Open Budget instance.</p>
+<p>To acheive this, we have a system that delcares certain entity relations where a <em>Domain</em> is the overall context for an entity, <em>DomainDivisions</em> are logical, distinct divisions in a domain (according to the business logic of the domain), and <em>Entities</em> are the actual entities that are present in the domain.</p>
+<div class="section" id="how-it-works">
+<h3>How it works<a class="headerlink" href="#how-it-works" title="Permalink to this headline">¶</a></h3>
+<p>In explaining the Domain/DomainDivision/Entity relations, we&#8217;ll demonstrate with concrete examples of Israeli governmental system - the major context for the first iteration of Open Budget.</p>
+<div class="section" id="domain">
+<h4>Domain<a class="headerlink" href="#domain" title="Permalink to this headline">¶</a></h4>
+<p>A Domain is the ultimate context for the entities in the system. There can in fact be multiple domains, each describing different &#8220;entity systems&#8221;, but this has not been actualized in views and templates of the current codebase.</p>
+<p>To explain by example, imagine we want to use Open Budget for the Budget and Actual data of municipalities in Israel (our first use case).</p>
+<p>In this case, our Domain is &#8220;Government&#8221;, or more precisely, &#8220;Israel Government&#8221;. (Remember, in terms of the data model, we could have a single instance of Open Budget with an &#8220;Israel Government&#8221; Domain and an &#8220;Australian Government&#8221; Domain.)</p>
+<p>Let&#8217;s move on to see how we break up (divide) this domain according to its actual structure.</p>
+</div>
+<div class="section" id="domaindivision">
+<h4>DomainDivision<a class="headerlink" href="#domaindivision" title="Permalink to this headline">¶</a></h4>
+<p>A DomainDivision describes some type of logical division for a domain - it could be administrative, geographical, ad hoc - anything that makes sense according to the Domain&#8217;s internal logic.</p>
+<p>For our &#8220;Israel Government&#8221; example, we look at the structure of the government, and see how it breaks down from the national to local level.</p>
+<p>We see that in Israel, the government has the following official administrative divisions:</p>
+<ul class="simple">
+<li>State</li>
+<li>District</li>
+<li>Sub-District</li>
+<li>City Muncipality</li>
+<li>Local Muncipality</li>
+<li>Regional Muncipality</li>
+</ul>
+<p>Now, we cannot assume that each division is a node in a strict hierarchical tree.</p>
+<p>For example, in the Israeli case, some of our City Municipalities belong directly to a District, yet most of them belong directly to sub-districts.</p>
+<p>Another example: the three &#8220;municipality&#8221; types are at an equal level in the &#8220;tree&#8221;, and the distinction is based on things like square meterage and population.</p>
+<p>So, instead of having a parent relationship to self, we have a more flexible index field, which is an integer, where 0 represents the top level, and subsequent numbering the subsequent levels.</p>
+<p>Explicitly, in our Israeli case, the diviion structure is as follows:</p>
+<ul class="simple">
+<li>State: 0</li>
+<li>District: 1</li>
+<li>Sub-District: 2</li>
+<li>City Muncipality: 3</li>
+<li>Local Muncipality: 3</li>
+<li>Regional Muncipality: 3</li>
+</ul>
+<p>We also note that note that not all entities declare budgets. In the Israel Government example, the State declares budgets, and the Municipality types declare budgets.</p>
+<p>The other levels of government serve purely administrative roles. So, our DomainDivision model has a boolena flag &#8220;has_budgets&#8221;, to indicate if entities of this division declare budgets. This flag is a helper for views and templates, when querying over entities for budget and actual data.</p>
+</div>
+<div class="section" id="entity">
+<h4>Entity<a class="headerlink" href="#entity" title="Permalink to this headline">¶</a></h4>
+<p>Our Domain and Domain Division models provide scope the Entity objects.</p>
+<p>An entity is any &#8220;unit&#8221;, &#8220;group&#8221;, or, well, &#8220;entity&#8221; in the Domain.</p>
+<p>In our Israel Government case, we have an entity &#8220;Israel&#8221; (which belongs to the &#8220;State&#8221; domain division), and we have a number of entities that belong to the &#8220;City Municipality&#8221; domain division, such as &#8220;Tel Aviv&#8221;, &#8220;Jerusalem&#8221;, &#8220;Haifa&#8221;, &#8220;Ra&#8217;anana&#8221; and so on.</p>
+<p>Let&#8217; take another example to illustrate entities, with a completely different Domain/DomainDivision/Entity set. We&#8217;ll take an example from the corporate world.</p>
+<p>Say we have a Domain &#8220;Google Corp&#8221;, a corporation big enough to theoretical have a complex administrative structure all of its own.</p>
+<p>We might have the following structure for &#8220;Google Corp&#8221;:</p>
+<ul class="simple">
+<li>Global: 0 [entity: &#8220;Google&#8221;]</li>
+<li>Region: 1 [entities: &#8220;USA&#8221;, &#8220;UK&#8221;, &#8220;Australia&#8221;, &#8220;Israel&#8221;]</li>
+<li>Department: 2 [entities: &#8220;Marketing&#8221;,parent:US; &#8220;Marketing&#8221;,parent:UK; and so on]</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
+<p>There are no configuration options for Entities.</p>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<p>There are no dependencies for Entities.</p>
+</div>
+<div class="section" id="project-code">
+<h2>Project Code<a class="headerlink" href="#project-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="models">
+<h3>Models<a class="headerlink" href="#models" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/entities/models.py">https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/entities/models.py</a></p>
+<p>Above, in &#8220;How it works&#8221;, we describe the relationship between the Domain, DomainDivision and Entity models.</p>
+<p>While Domain and DomainDivision provide the context for entities, it is actually the Entity model where most of the important stuff happens. Budgets and Actuals ultimately belong to this or that entity.</p>
+</div>
+<div class="section" id="views">
+<h3>Views<a class="headerlink" href="#views" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/entities/views.py">https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/entities/views.py</a></p>
+<p>The views are straight forward views to return list and detail views of entities.</p>
+</div>
+<div class="section" id="urls">
+<h3>URLs<a class="headerlink" href="#urls" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/entities/urls.py">https://github.com/hasadna/omuni-budget/blob/develop/openbudget/apps/entities/urls.py</a></p>
+<p>The urls are straight forward views to return list and detail views of entities, budgets, actuals, budget items, actual items, and budget templates.</p>
+</div>
+<div class="section" id="templates">
+<h3>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/hasadna/omuni-budget/tree/develop/openbudget/apps/entities/templates/entities">https://github.com/hasadna/omuni-budget/tree/develop/openbudget/apps/entities/templates/entities</a></p>
+<p>Simple templates for entity list and detail views.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Entities</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
+<li><a class="reference internal" href="#how-it-works">How it works</a><ul>
+<li><a class="reference internal" href="#domain">Domain</a></li>
+<li><a class="reference internal" href="#domaindivision">DomainDivision</a></li>
+<li><a class="reference internal" href="#entity">Entity</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#project-code">Project Code</a><ul>
+<li><a class="reference internal" href="#models">Models</a></li>
+<li><a class="reference internal" href="#views">Views</a></li>
+<li><a class="reference internal" href="#urls">URLs</a></li>
+<li><a class="reference internal" href="#templates">Templates</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../index.html"
+                        title="previous chapter">Guide</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../interfaces/api.html"
+                        title="next chapter">API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/guide/features/entities.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../interfaces/api.html" title="API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../index.html" title="Guide"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Open Budget 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Guide</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Yehonatan Daniv and Paul Walsh for the Open Knowledge Workshop.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

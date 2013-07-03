@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, url
-from openbudget.apps.entities.views.ui import EntityDetail, EntityList
+from entities.views.ui import EntityDetail, EntityList
 
 
 urlpatterns = patterns('',
