@@ -1,10 +1,15 @@
 from django.contrib import admin
-from grappelli_modeltranslation.admin import TranslationAdmin
-from entities.models import Entity
+from entities.models import Domain, Division, Entity
 
-
-class EntityAdmin(TranslationAdmin):
+class DomainAdmin(admin.ModelAdmin):
     pass
 
+class DivisionAdmin(admin.ModelAdmin):
+    pass
 
+class EntityAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(Domain, DomainAdmin)
 admin.site.register(Entity, EntityAdmin)
+admin.site.register(Division, DivisionAdmin)
