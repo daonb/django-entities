@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from uuidfield import UUIDField
 from autoslug import AutoSlugField
+from slugify import slugify
 
 class ClassMethodMixin(object):
     """A mixin for commonly used classmethods on models."""
@@ -220,7 +221,8 @@ class Entity(TimeStampedModel, ClassMethodMixin):
     slug = AutoSlugField(
         db_index=True,
         populate_from='name',
-        unique=True
+        unique=True,
+        slugify = slugify
     )
 
     @property
