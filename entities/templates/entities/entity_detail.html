@@ -1,0 +1,69 @@
+{% extends 'entities/entity_list.html' %}
+{% load i18n interactions %}
+{% load url from future %}
+
+{% block title %}
+{{ object.name }}
+{% endblock title %}
+
+{% block interactions %}
+{% if user.is_authenticated %}
+{% follow object user %}
+{% star object user %}
+{% endif %}
+{% endblock interactions %}
+
+{% block content %}
+<p>
+    <a href="{% url 'entity_list' %}">
+        {% trans 'Back to all entities' %}
+    </a>
+</p>
+
+<section>
+    <div>
+        {{ object.description }}
+    </div>
+</section>
+
+<section>
+    <h2>
+        {% trans 'Budgets and Actuals' %}
+    </h2>
+
+    {% if not object.division.budgeting %}
+    <p>
+        <strong>{{ object.name }}</strong> {% trans 'is a' %} {{ object.division.name }} {% trans 'of' %} {{ object.division.domain }}, {% trans 'and therefore does not declare budgets. It serves a purely administrative function.' %}
+    </p>
+    {% else %}
+
+    {% if not object.sheets %}
+    <p>
+        {% trans 'There are no Budgets for this entity' %}.
+    </p>
+    {% else %}
+    <div>
+        <h3>
+            {% trans 'Budgets available' %}...
+        </h3>
+        {% if not object.sheets.all %}
+        <p>
+            {% trans 'There are no Budgets this entity' %}.
+        </p>
+        {% else %}
+        <ul>
+        {% for sheet in object.sheets.all %}
+        <li>
+            <a href="{% url 'sheet_detail' object.slug sheet.period %}">{{ sheet.period }} {{ sheet.total }}</a>
+        </li>
+
+        {% endfor %}
+        </ul>
+        {% endif %}
+
+    </div>
+    {% endif %}
+
+    {% endif %}
+</section>
+{% endblock content %}

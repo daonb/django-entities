@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}
+{% trans 'Opening Israeli Budgets' %}
+{% endblock title %}
+
+{% block content %}
+<p>
+    {% trans 'If there is missing data that you know how to source, or that you&apos;d like to see here, please' %} <a href="{% url 'contact' %}" title="{% trans 'contact us' %}">{% trans 'contact us' %}</a>
+</p>
+
+{% for entity in object_list %}
+<div class="entity-preview">
+    <h3>
+        {{ entity.name }}
+
+        <span class="more">
+            <a class="button blue" href="{% url 'entity_detail' entity.slug %}" title="{{ entity.name }}">{% trans 'More' %}</a>
+        </span>
+    </h3>
+    <div>
+        <div class="context">
+            {{ entity.division__name }}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock content %}
