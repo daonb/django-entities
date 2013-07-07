@@ -140,6 +140,7 @@ class Division(TimeStampedModel, ClassMethodMixin):
     index = models.PositiveSmallIntegerField(
         _('Index'),
         db_index=True,
+        default=100,
         help_text=_('Model the domain structure by positioning this division '
                     'relative to others. 0 is the highest level. Divisions of '
                     'equivalent level  should have an equal value.')
