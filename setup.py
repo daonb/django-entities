@@ -29,5 +29,5 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
-    requires=['django_uuidfield', 'django_autoslug', 'factory_boy', 'unicode-slugify'],
+    requires=['django_uuidfield', 'django_autoslug', 'factory_boy', 'unicode_slugify'],
 )
