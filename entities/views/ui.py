@@ -9,8 +9,7 @@ class EntityList(ListView):
     def get_context_data(self, **kwargs):
         context = super(EntityList, self).get_context_data(**kwargs)
         #TODO: change this now we have new manager
-        context['object_list'] = Entity.objects.filter(division__index=3).values\
-                ('name', 'slug', 'description', 'division__name')
+        context['object_list'] = Entity.objects.filter(division__index=3)
         return context
 
 
